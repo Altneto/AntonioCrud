@@ -1,8 +1,7 @@
 package antonio.crud.core.usecase;
 
-import antonio.crud.core.domain.Pessoa;
-import antonio.crud.infra.database.repository.PessoaRepository;
-import lombok.RequiredArgsConstructor;
+import java.util.Optional;
+
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
@@ -11,8 +10,9 @@ import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import antonio.crud.core.domain.Pessoa;
+import antonio.crud.infra.database.repository.PessoaRepository;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
