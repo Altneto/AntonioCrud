@@ -1,11 +1,11 @@
 package antonio.crud.infra.http.rest;
 
-import org.jetbrains.annotations.NotNull;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.lang.NonNull;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,7 +43,7 @@ public class PessoaResource {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void create(@Valid @RequestBody final CriarPessoa.In pessoa,
-                       @NotNull final HttpServletResponse response){
+                       @NonNull final HttpServletResponse response){
         final var created = criar.execute(pessoa);
         response.setHeader(HttpHeaders.LOCATION, ServletUriComponentsBuilder
                 .fromCurrentRequest()
