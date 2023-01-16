@@ -43,7 +43,7 @@ public class PessoaResource {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void create(@Valid @RequestBody final CriarPessoa.In pessoa,
-                       @NonNull final HttpServletResponse response){
+                       final HttpServletResponse response){
         final var created = criar.execute(pessoa);
         response.setHeader(HttpHeaders.LOCATION, ServletUriComponentsBuilder
                 .fromCurrentRequest()

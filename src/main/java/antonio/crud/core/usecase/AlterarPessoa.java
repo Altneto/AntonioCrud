@@ -1,6 +1,8 @@
 package antonio.crud.core.usecase;
 
 import antonio.crud.infra.database.repository.PessoaRepository;
+import antonio.crud.infra.exception.BusinessException;
+import antonio.crud.infra.helper.I18NHelper;
 import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -13,6 +15,8 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class AlterarPessoa {
+
+    I18NHelper i18NHelper;
     private final PessoaRepository repository;
     private final ObterPessoaPorId obterPessoaPorId;
 

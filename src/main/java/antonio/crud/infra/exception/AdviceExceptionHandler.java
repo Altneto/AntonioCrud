@@ -29,6 +29,7 @@ import org.springframework.web.multipart.support.MissingServletRequestPartExcept
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -243,22 +244,14 @@ public class AdviceExceptionHandler extends ResponseEntityExceptionHandler {
             @NonNull final String message
     ) {
         final var error = ErrorResponse.builder().message(message);
-        e
-                .getBindingResult()
-                .getFieldErrors()
-                .forEach(err ->
-                        error.detail(
-                                buildErrorResponseDetail(err.getField(), err.getDefaultMessage())
-                        )
-                );
-        e
-                .getBindingResult()
-                .getGlobalErrors()
-                .forEach(err ->
-                        error.detail(
-                                buildErrorResponseDetail(err.getObjectName(), err.getDefaultMessage())
-                        )
-                );
+        final List<ErrorResponse.Detail> details = new ArrayList<>();
+        e.getBindingResult()
+            .getFieldErrors()
+            .forEach(err -> details.add(buildErrorResponseDetail(err.getField(), err.getDefaultMessage())));
+        e.getBindingResult()
+            .getGlobalErrors()
+            .forEach(err -> details.add(buildErrorResponseDetail(err.getObjectName(), err.getDefaultMessage())));
+        error.details(details.isEmpty() ? null: details);
         return error.build();
     }
 
@@ -268,7 +261,7 @@ public class AdviceExceptionHandler extends ResponseEntityExceptionHandler {
 
     private ErrorResponse buildErrorResponse(@NonNull final String message,
                                              @NonNull final ErrorResponse.Detail detail) {
-        return ErrorResponse.builder().message(message).detail(detail).build();
+        return ErrorResponse.builder().message(message).details(List.of(detail)).build();
     }
 
     private ErrorResponse buildErrorResponse(@NonNull final String message,

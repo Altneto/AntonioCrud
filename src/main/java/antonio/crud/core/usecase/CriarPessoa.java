@@ -2,7 +2,6 @@ package antonio.crud.core.usecase;
 
 import antonio.crud.core.domain.Pessoa;
 import antonio.crud.infra.database.repository.PessoaRepository;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -10,8 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
-
-import java.sql.SQLException;
 
 @Service
 @RequiredArgsConstructor

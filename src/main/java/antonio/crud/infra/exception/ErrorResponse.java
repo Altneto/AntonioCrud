@@ -18,7 +18,6 @@ public class ErrorResponse {
 
     private String message;
 
-    @Singular
     private List<Detail> details;
 
     public List<Detail> getDetails() {
