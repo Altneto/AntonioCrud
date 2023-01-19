@@ -1,10 +1,12 @@
 package antonio.crud.infra.http.rest;
 
+import antonio.crud.infra.helper.ReportHelper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.lang.NonNull;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,6 +30,9 @@ import antonio.crud.core.usecase.ObterPessoaPorId;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Validated
 @RestController
@@ -75,6 +80,14 @@ public class PessoaResource {
                              @RequestParam(required = false) final String cpf,
                              @PageableDefault final Pageable pageable){
         return listarPessoas.execute(nome,telefone,cpf,pageable);
+    }
+
+    @GetMapping(value = "/report", produces = MediaType.APPLICATION_PDF_VALUE)
+    public byte[] report(HttpServletResponse response){
+        return ReportHelper.makePDF("pessoas",
+                                    new HashMap<>(Map.of("subtitle","Relatório Massa",
+                                                         "logo",ReportHelper.getImage("/static/mamao.jpg"))),
+                                    listarPessoas.list());
     }
 
 }

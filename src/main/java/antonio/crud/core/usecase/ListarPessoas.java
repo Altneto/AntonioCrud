@@ -1,5 +1,6 @@
 package antonio.crud.core.usecase;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Example;
@@ -32,6 +33,10 @@ public class ListarPessoas {
                         .withMatcher("nome",
                                       ExampleMatcher.GenericPropertyMatcher.of(ExampleMatcher.StringMatcher.CONTAINING,true))
                 ), pageable);
+    }
+
+    public List<Pessoa> list(){
+        return repository.findAll();
     }
 
 }
